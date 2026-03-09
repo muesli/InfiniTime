@@ -26,7 +26,7 @@
    "roboto_20": {
       "sources": [
          {
-            "file": "fonts/Roboto-Bold.ttf",
+            "file": "Roboto-Bold.ttf",
             "symbols": "0123456789-°% ABCDEFGHIJKLMNOPQRSTUVWXYZ"
          }
       ],
@@ -38,7 +38,7 @@
    "roboto_italic_16": {
       "sources": [
          {
-            "file": "fonts/Roboto-MediumItalic.ttf",
+            "file": "Roboto-MediumItalic.ttf",
             "symbols": "0123456789-°% ABCDEFGHIJKLMNOPQRSTUVWXYZ"
          }
       ],
@@ -50,7 +50,7 @@
    "roboto_italic_20": {
       "sources": [
          {
-            "file": "fonts/Roboto-MediumItalic.ttf",
+            "file": "Roboto-MediumItalic.ttf",
             "symbols": "0123456789-°% ABCDEFGHIJKLMNOPQRSTUVWXYZ"
          }
       ],
@@ -62,7 +62,7 @@
    "roboto_italic_32": {
       "sources": [
          {
-            "file": "fonts/Roboto-BlackItalic.ttf",
+            "file": "Roboto-BlackItalic.ttf",
             "symbols": "0123456789-°%"
          }
       ],
