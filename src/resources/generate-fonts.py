@@ -14,6 +14,8 @@ COMMON_FONT_DIRS = [
     '/usr/share/fonts/TTF',
     '/usr/share/fonts/truetype',
     '/usr/share/fonts/opentype',
+    '/usr/share/fonts/roboto',
+    '/usr/share/fonts/truetype/roboto-fontface/roboto/',
     '/usr/share/fonts',
     '/usr/local/share/fonts',
     os.path.expanduser('~/.local/share/fonts'),
