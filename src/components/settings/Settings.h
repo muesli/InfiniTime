@@ -55,6 +55,10 @@ namespace Pinetime {
         int colorIndex = 0;
       };
 
+      struct CleanDigital {
+        int colorIndex = 0;
+      };
+
       Settings(Pinetime::Controllers::FS& fs);
 
       Settings(const Settings&) = delete;
@@ -137,6 +141,17 @@ namespace Pinetime {
 
       int GetInfineatColorIndex() const {
         return settings.watchFaceInfineat.colorIndex;
+      };
+
+      void SetCleanDigitalColorIndex(int index) {
+        if (index != settings.cleanDigital.colorIndex) {
+          settings.cleanDigital.colorIndex = index;
+          settingsChanged = true;
+        }
+      };
+
+      int GetCleanDigitalColorIndex() const {
+        return settings.cleanDigital.colorIndex;
       };
 
       void SetPTSGaugeStyle(PTSGaugeStyle gaugeStyle) {
@@ -354,7 +369,7 @@ namespace Pinetime {
     private:
       Pinetime::Controllers::FS& fs;
 
-      static constexpr uint32_t settingsVersion = 0x000a;
+      static constexpr uint32_t settingsVersion = 0x000b;
 
       struct SettingsData {
         uint32_t version = settingsVersion;
@@ -375,6 +390,8 @@ namespace Pinetime {
         PrideFlag prideFlag = PrideFlag::Gay;
 
         WatchFaceInfineat watchFaceInfineat;
+
+        CleanDigital cleanDigital;
 
         std::bitset<5> wakeUpMode {0};
         uint16_t shakeWakeThreshold = 150;
