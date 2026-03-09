@@ -369,7 +369,7 @@ namespace Pinetime {
     private:
       Pinetime::Controllers::FS& fs;
 
-      static constexpr uint32_t settingsVersion = 0x000b;
+      static constexpr uint32_t settingsVersion = 0x000c;
 
       struct SettingsData {
         uint32_t version = settingsVersion;
@@ -391,8 +391,6 @@ namespace Pinetime {
 
         WatchFaceInfineat watchFaceInfineat;
 
-        CleanDigital cleanDigital;
-
         std::bitset<5> wakeUpMode {0};
         uint16_t shakeWakeThreshold = 150;
 
@@ -400,6 +398,8 @@ namespace Pinetime {
 
         bool dfuAndFsEnabledOnBoot = false;
         uint16_t heartRateBackgroundPeriod = std::numeric_limits<uint16_t>::max(); // Disabled by default
+
+        CleanDigital cleanDigital;
       };
 
       SettingsData settings;
