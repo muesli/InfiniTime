@@ -89,7 +89,7 @@ namespace Pinetime {
         void UpdateProgressBar(uint8_t filledTiles);
         void RefreshBar();
         enum class BarMode : uint8_t { Steps, Weather, HeartRate, Secs, Bat };
-        BarMode barMode = BarMode::Steps;
+        static BarMode barMode;
 
         uint8_t hrMin = 0;
         uint8_t hrMax = 0;

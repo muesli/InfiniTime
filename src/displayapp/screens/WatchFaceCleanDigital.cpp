@@ -40,6 +40,7 @@ namespace {
 
 lv_color_t WatchFaceCleanDigital::colorProgressFilled;
 lv_color_t WatchFaceCleanDigital::colorProgressEmpty;
+WatchFaceCleanDigital::BarMode WatchFaceCleanDigital::barMode = WatchFaceCleanDigital::BarMode::Steps;
 
 WatchFaceCleanDigital::WatchFaceCleanDigital(Controllers::DateTime& dateTimeController,
                                              const Controllers::Battery& batteryController,
