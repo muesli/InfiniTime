@@ -64,6 +64,26 @@
       "bpp": 1,
       "size": 48
    },
+   "roboto_96": {
+      "sources": [
+         {
+            "file": "Roboto-Black.ttf",
+            "symbols": "0123456789"
+         }
+      ],
+      "bpp": 1,
+      "size": 96
+   },
+   "roboto_italic_120": {
+      "sources": [
+         {
+            "file": "Roboto-BlackItalic.ttf",
+            "symbols": "0123456789"
+         }
+      ],
+      "bpp": 1,
+      "size": 120
+   },
    "fontawesome_weathericons": {
       "sources": [
          {

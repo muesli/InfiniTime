@@ -23,6 +23,54 @@
       "format": "bin",
       "target_path": "/fonts/"
    },
+   "roboto_20": {
+      "sources": [
+         {
+            "file": "fonts/Roboto-Bold.ttf",
+            "symbols": "0123456789-°% ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+         }
+      ],
+      "bpp": 2,
+      "size": 20,
+      "format": "bin",
+      "target_path": "/fonts/"
+   },
+   "roboto_italic_16": {
+      "sources": [
+         {
+            "file": "fonts/Roboto-MediumItalic.ttf",
+            "symbols": "0123456789-°% ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+         }
+      ],
+      "bpp": 2,
+      "size": 16,
+      "format": "bin",
+      "target_path": "/fonts/"
+   },
+   "roboto_italic_20": {
+      "sources": [
+         {
+            "file": "fonts/Roboto-MediumItalic.ttf",
+            "symbols": "0123456789-°% ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+         }
+      ],
+      "bpp": 2,
+      "size": 20,
+      "format": "bin",
+      "target_path": "/fonts/"
+   },
+   "roboto_italic_32": {
+      "sources": [
+         {
+            "file": "fonts/Roboto-BlackItalic.ttf",
+            "symbols": "0123456789-°%"
+         }
+      ],
+      "bpp": 1,
+      "size": 32,
+      "format": "bin",
+      "target_path": "/fonts/"
+   },
    "lv_font_dots_40": {
       "sources": [
          {
