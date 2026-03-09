@@ -63,10 +63,12 @@ WatchFaceCleanDigital::WatchFaceCleanDigital(Controllers::DateTime& dateTimeCont
 
   lfs_file f = {};
 
+  /*
   if (filesystem.FileOpen(&f, "/fonts/roboto_20.bin", LFS_O_RDONLY) >= 0) {
     filesystem.FileClose(&f);
     font_roboto_20 = lv_font_load("F:/fonts/roboto_20.bin");
   }
+  */
   if (filesystem.FileOpen(&f, "/fonts/roboto_italic_16.bin", LFS_O_RDONLY) >= 0) {
     filesystem.FileClose(&f);
     font_roboto_italic_16 = lv_font_load("F:/fonts/roboto_italic_16.bin");
@@ -123,13 +125,13 @@ WatchFaceCleanDigital::WatchFaceCleanDigital(Controllers::DateTime& dateTimeCont
   lv_obj_set_auto_realign(weatherIcon, true);
 
   temperature = lv_label_create(lv_scr_act(), nullptr);
-  lv_obj_set_style_local_text_font(temperature, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, font_roboto_20);
+  lv_obj_set_style_local_text_font(temperature, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, font_roboto_italic_20); // FIXME
   lv_obj_set_style_local_text_color(temperature, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, colorTemp);
   lv_label_set_text(temperature, "");
   lv_obj_align(temperature, nullptr, LV_ALIGN_IN_TOP_MID, 72, 64);
 
   label_date = lv_label_create(lv_scr_act(), nullptr);
-  lv_obj_set_style_local_text_font(label_date, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, font_roboto_20);
+  lv_obj_set_style_local_text_font(label_date, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, font_roboto_italic_20); // FIXME
   lv_obj_align(label_date, lv_scr_act(), LV_ALIGN_CENTER, -60, 22);
   lv_obj_set_style_local_text_color(label_date, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, colorDate);
 
