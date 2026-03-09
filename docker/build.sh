@@ -84,7 +84,8 @@ CmakeGenerate() {
     -DARM_NONE_EABI_TOOLCHAIN_PATH="$TOOLS_DIR/$GCC_ARM_PATH" \
     -DNRF5_SDK_PATH="$TOOLS_DIR/$NRF_SDK_VER" \
     -DBUILD_DFU=1 \
-    -DBUILD_RESOURCES=1
+    -DBUILD_RESOURCES=1 \
+    -DENABLE_WATCHFACES="WatchFace::Digital,WatchFace::CleanDigital"
 }
 
 CmakeBuild() {
