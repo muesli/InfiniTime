@@ -241,11 +241,28 @@ WatchFaceCleanDigital::~WatchFaceCleanDigital() {
   lv_obj_clean(lv_scr_act());
 }
 
-void WatchFaceCleanDigital::UpdateProgressBar(uint8_t filledTiles) {
+void WatchFaceCleanDigital::UpdateProgressBar(uint8_t targetTiles) {
   if (!progressBar)
     return;
-  lv_obj_set_user_data(progressBar, reinterpret_cast<lv_obj_user_data_t>(static_cast<intptr_t>(filledTiles)));
-  lv_obj_invalidate(progressBar);
+  const uint8_t currentDisplayed = static_cast<uint8_t>(reinterpret_cast<intptr_t>(lv_obj_get_user_data(progressBar)));
+  const int diff = static_cast<int>(targetTiles) - static_cast<int>(currentDisplayed);
+  if (diff >= -1 && diff <= 1) {
+    // Small change (<=1 tile): skip animation, apply immediately
+    barAnimating = false;
+    barAnimTarget = targetTiles;
+    if (diff != 0) {
+      lv_obj_set_user_data(progressBar, reinterpret_cast<lv_obj_user_data_t>(static_cast<intptr_t>(targetTiles)));
+      lv_obj_invalidate(progressBar);
+    }
+    return;
+  }
+  // Already animating toward this target — don't reset the clock.
+  if (barAnimating && targetTiles == barAnimTarget)
+    return;
+  barAnimFrom = currentDisplayed;
+  barAnimTarget = targetTiles;
+  barAnimStartTick = xTaskGetTickCount();
+  barAnimating = true;
 }
 
 void WatchFaceCleanDigital::RefreshBar() {
@@ -498,6 +515,30 @@ void WatchFaceCleanDigital::UpdateSelected(lv_obj_t* object, lv_event_t event) {
 
 void WatchFaceCleanDigital::Refresh() {
   statusIcons.Update();
+
+  if (barAnimating && progressBar) {
+    const TickType_t elapsed = xTaskGetTickCount() - barAnimStartTick;
+    const TickType_t durationTicks = pdMS_TO_TICKS(barAnimDurationMs);
+    uint8_t displayTiles;
+    if (elapsed >= durationTicks) {
+      displayTiles = barAnimTarget;
+      barAnimating = false;
+    } else {
+      const int32_t delta = static_cast<int32_t>(barAnimTarget) - static_cast<int32_t>(barAnimFrom);
+      int32_t interpolated =
+        static_cast<int32_t>(barAnimFrom) + (delta * static_cast<int32_t>(elapsed)) / static_cast<int32_t>(durationTicks);
+      if (interpolated < 0)
+        interpolated = 0;
+      if (interpolated > progressTileCount)
+        interpolated = progressTileCount;
+      displayTiles = static_cast<uint8_t>(interpolated);
+    }
+    const uint8_t current = static_cast<uint8_t>(reinterpret_cast<intptr_t>(lv_obj_get_user_data(progressBar)));
+    if (displayTiles != current) {
+      lv_obj_set_user_data(progressBar, reinterpret_cast<lv_obj_user_data_t>(static_cast<intptr_t>(displayTiles)));
+      lv_obj_invalidate(progressBar);
+    }
+  }
 
   notificationState = notificationManager.AreNewNotificationsAvailable();
   if (notificationState.IsUpdated()) {

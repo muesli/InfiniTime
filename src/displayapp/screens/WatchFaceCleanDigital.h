@@ -98,6 +98,12 @@ namespace Pinetime {
         std::chrono::time_point<std::chrono::system_clock, std::chrono::minutes> hrCacheTime {};
         TickType_t savedTick = 0;
 
+        static constexpr uint32_t barAnimDurationMs = 1000;
+        uint8_t barAnimTarget = 0;
+        uint8_t barAnimFrom = 0;
+        TickType_t barAnimStartTick = 0;
+        bool barAnimating = false;
+
         Controllers::DateTime& dateTimeController;
         const Controllers::Battery& batteryController;
         Controllers::NotificationManager& notificationManager;
