@@ -55,7 +55,6 @@ WatchFaceCleanDigital::WatchFaceCleanDigital(Controllers::DateTime& dateTimeCont
                                              Controllers::Settings& settingsController,
                                              Controllers::HeartRateController& heartRateController,
                                              Controllers::MotionController& motionController,
-                                             Controllers::FS& filesystem,
                                              Controllers::SimpleWeatherService& weatherService)
   : currentDateTime {{}},
     dateTimeController {dateTimeController},
@@ -66,37 +65,6 @@ WatchFaceCleanDigital::WatchFaceCleanDigital(Controllers::DateTime& dateTimeCont
     motionController {motionController},
     weatherService {weatherService},
     statusIcons(batteryController, bleController, alarmController) {
-
-  lfs_file f = {};
-
-  /*
-  if (filesystem.FileOpen(&f, "/fonts/roboto_20.bin", LFS_O_RDONLY) >= 0) {
-    filesystem.FileClose(&f);
-    font_roboto_20 = lv_font_load("F:/fonts/roboto_20.bin");
-  }
-  */
-  if (filesystem.FileOpen(&f, "/fonts/roboto_italic_16.bin", LFS_O_RDONLY) >= 0) {
-    filesystem.FileClose(&f);
-    font_roboto_italic_16 = lv_font_load("F:/fonts/roboto_italic_16.bin");
-  }
-  if (filesystem.FileOpen(&f, "/fonts/roboto_italic_20.bin", LFS_O_RDONLY) >= 0) {
-    filesystem.FileClose(&f);
-    font_roboto_italic_20 = lv_font_load("F:/fonts/roboto_italic_20.bin");
-  }
-  if (filesystem.FileOpen(&f, "/fonts/roboto_italic_32.bin", LFS_O_RDONLY) >= 0) {
-    filesystem.FileClose(&f);
-    font_roboto_italic_32 = lv_font_load("F:/fonts/roboto_italic_32.bin");
-  }
-  /*
-  if (filesystem.FileOpen(&f, "/fonts/roboto_96.bin", LFS_O_RDONLY) >= 0) {
-    filesystem.FileClose(&f);
-    font_roboto_96 = lv_font_load("F:/fonts/roboto_96.bin");
-  }
-  if (filesystem.FileOpen(&f, "/fonts/roboto_italic_120.bin", LFS_O_RDONLY) >= 0) {
-    filesystem.FileClose(&f);
-    font_roboto_120 = lv_font_load("F:/fonts/roboto_italic_120.bin");
-  }
-  */
 
   statusIcons.Create();
 
@@ -131,13 +99,13 @@ WatchFaceCleanDigital::WatchFaceCleanDigital(Controllers::DateTime& dateTimeCont
   lv_obj_set_auto_realign(weatherIcon, true);
 
   temperature = lv_label_create(lv_scr_act(), nullptr);
-  lv_obj_set_style_local_text_font(temperature, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, font_roboto_italic_20); // FIXME
+  lv_obj_set_style_local_text_font(temperature, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, &roboto_20);
   lv_obj_set_style_local_text_color(temperature, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, colorTemp);
   lv_label_set_text(temperature, "");
   lv_obj_align(temperature, nullptr, LV_ALIGN_IN_TOP_MID, 72, 64);
 
   label_date = lv_label_create(lv_scr_act(), nullptr);
-  lv_obj_set_style_local_text_font(label_date, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, font_roboto_italic_20); // FIXME
+  lv_obj_set_style_local_text_font(label_date, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, &roboto_20);
   lv_obj_align(label_date, lv_scr_act(), LV_ALIGN_CENTER, -60, 22);
   lv_obj_set_style_local_text_color(label_date, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, colorDate);
 
@@ -156,7 +124,7 @@ WatchFaceCleanDigital::WatchFaceCleanDigital(Controllers::DateTime& dateTimeCont
   lv_obj_align(label_time_ampm, lv_scr_act(), LV_ALIGN_IN_RIGHT_MID, -30, -55);
 
   progressValue = lv_label_create(lv_scr_act(), nullptr);
-  lv_obj_set_style_local_text_font(progressValue, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, font_roboto_italic_32);
+  lv_obj_set_style_local_text_font(progressValue, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, &roboto_italic_32);
   lv_obj_set_style_local_text_color(progressValue, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, colorProgressValue);
   lv_label_set_text_static(progressValue, "0");
   lv_obj_align(progressValue, lv_scr_act(), LV_ALIGN_IN_BOTTOM_MID, 0, -5);
@@ -203,19 +171,19 @@ WatchFaceCleanDigital::WatchFaceCleanDigital(Controllers::DateTime& dateTimeCont
   UpdateProgressBar(0);
 
   progressLabel = lv_label_create(lv_scr_act(), nullptr);
-  lv_obj_set_style_local_text_font(progressLabel, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, font_roboto_italic_20);
+  lv_obj_set_style_local_text_font(progressLabel, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, &roboto_italic_20);
   lv_obj_set_style_local_text_color(progressLabel, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, colorProgressLabel);
   lv_label_set_text_static(progressLabel, "STEPS");
   lv_obj_align(progressLabel, progressBar, LV_ALIGN_OUT_TOP_LEFT, 2, -4);
 
   progressMinLabel = lv_label_create(lv_scr_act(), nullptr);
-  lv_obj_set_style_local_text_font(progressMinLabel, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, font_roboto_italic_16);
+  lv_obj_set_style_local_text_font(progressMinLabel, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, &roboto_italic_16);
   lv_obj_set_style_local_text_color(progressMinLabel, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, colorProgressMinMax);
   lv_label_set_text_static(progressMinLabel, "0");
   lv_obj_align(progressMinLabel, progressBar, LV_ALIGN_OUT_BOTTOM_LEFT, 0, 4);
 
   progressMaxLabel = lv_label_create(lv_scr_act(), nullptr);
-  lv_obj_set_style_local_text_font(progressMaxLabel, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, font_roboto_italic_16);
+  lv_obj_set_style_local_text_font(progressMaxLabel, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, &roboto_italic_16);
   lv_obj_set_style_local_text_color(progressMaxLabel, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, colorProgressMinMax);
   lv_label_set_text_static(progressMaxLabel, "100");
   lv_obj_align(progressMaxLabel, progressBar, LV_ALIGN_OUT_BOTTOM_RIGHT, 0, 4);
@@ -226,23 +194,6 @@ WatchFaceCleanDigital::WatchFaceCleanDigital(Controllers::DateTime& dateTimeCont
 
 WatchFaceCleanDigital::~WatchFaceCleanDigital() {
   lv_task_del(taskRefresh);
-
-  if (font_roboto_120 != nullptr) {
-    lv_font_free(font_roboto_120);
-  }
-  if (font_roboto_96 != nullptr) {
-    lv_font_free(font_roboto_96);
-  }
-  if (font_roboto_italic_32 != nullptr) {
-    lv_font_free(font_roboto_italic_32);
-  }
-  if (font_roboto_italic_20 != nullptr) {
-    lv_font_free(font_roboto_italic_20);
-  }
-  if (font_roboto_italic_16 != nullptr) {
-    lv_font_free(font_roboto_italic_16);
-  }
-
   lv_obj_clean(lv_scr_act());
 }
 

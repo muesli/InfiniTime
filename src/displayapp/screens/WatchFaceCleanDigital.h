@@ -37,7 +37,6 @@ namespace Pinetime {
                               Controllers::Settings& settingsController,
                               Controllers::HeartRateController& heartRateController,
                               Controllers::MotionController& motionController,
-                              Controllers::FS& fs,
                               Controllers::SimpleWeatherService& weather);
         ~WatchFaceCleanDigital() override;
 
@@ -116,13 +115,6 @@ namespace Pinetime {
         Widgets::StatusIcons statusIcons;
         static lv_color_t colorProgressFilled;
         static lv_color_t colorProgressEmpty;
-
-        lv_font_t* font_roboto_20 = nullptr;
-        lv_font_t* font_roboto_italic_16 = nullptr;
-        lv_font_t* font_roboto_italic_20 = nullptr;
-        lv_font_t* font_roboto_italic_32 = nullptr;
-        lv_font_t* font_roboto_96 = nullptr;
-        lv_font_t* font_roboto_120 = nullptr;
       };
     }
 
@@ -140,7 +132,6 @@ namespace Pinetime {
                                                   controllers.settingsController,
                                                   controllers.heartRateController,
                                                   controllers.motionController,
-                                                  controllers.filesystem,
                                                   *controllers.weatherController);
       };
 
