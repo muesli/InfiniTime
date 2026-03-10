@@ -41,6 +41,11 @@ namespace {
 lv_color_t WatchFaceCleanDigital::colorProgressFilled;
 lv_color_t WatchFaceCleanDigital::colorProgressEmpty;
 WatchFaceCleanDigital::BarMode WatchFaceCleanDigital::barMode = WatchFaceCleanDigital::BarMode::Steps;
+uint8_t WatchFaceCleanDigital::hrMin = 0;
+uint8_t WatchFaceCleanDigital::hrMax = 0;
+uint8_t WatchFaceCleanDigital::hrCached = 0;
+bool WatchFaceCleanDigital::hrCacheValid = false;
+std::chrono::time_point<std::chrono::system_clock, std::chrono::minutes> WatchFaceCleanDigital::hrCacheTime {};
 
 WatchFaceCleanDigital::WatchFaceCleanDigital(Controllers::DateTime& dateTimeController,
                                              const Controllers::Battery& batteryController,

@@ -91,11 +91,11 @@ namespace Pinetime {
         enum class BarMode : uint8_t { Steps, Weather, HeartRate, Secs, Bat };
         static BarMode barMode;
 
-        uint8_t hrMin = 0;
-        uint8_t hrMax = 0;
-        uint8_t hrCached = 0;
-        bool hrCacheValid = false;
-        std::chrono::time_point<std::chrono::system_clock, std::chrono::minutes> hrCacheTime {};
+        static uint8_t hrMin;
+        static uint8_t hrMax;
+        static uint8_t hrCached;
+        static bool hrCacheValid;
+        static std::chrono::time_point<std::chrono::system_clock, std::chrono::minutes> hrCacheTime;
         TickType_t savedTick = 0;
 
         static constexpr uint32_t barAnimDurationMs = 1000;
