@@ -519,12 +519,12 @@ void WatchFaceCleanDigital::Refresh() {
       // lv_label_set_text(label_time_ampm, ampmChar);
 
       lv_label_set_text_fmt(label_hour, "%02d", hour);
-      lv_obj_align(label_hour, lv_scr_act(), LV_ALIGN_CENTER, -32, -48);
+      lv_obj_align(label_hour, lv_scr_act(), LV_ALIGN_CENTER, -28, -48);
       lv_label_set_text_fmt(label_minute, "%02d", minute);
       lv_obj_align(label_minute, lv_scr_act(), LV_ALIGN_CENTER, 40, 12);
     } else {
       lv_label_set_text_fmt(label_hour, "%02d", hour);
-      lv_obj_align(label_hour, lv_scr_act(), LV_ALIGN_CENTER, -32, -48);
+      lv_obj_align(label_hour, lv_scr_act(), LV_ALIGN_CENTER, -28, -48);
       lv_label_set_text_fmt(label_minute, "%02d", minute);
       lv_obj_align(label_minute, lv_scr_act(), LV_ALIGN_CENTER, 40, 12);
     }
