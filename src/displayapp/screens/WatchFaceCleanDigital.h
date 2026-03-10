@@ -80,7 +80,7 @@ namespace Pinetime {
         lv_obj_t* btnPrevColor = nullptr;
         lv_obj_t* btnSettings = nullptr;
 
-        static constexpr int progressTileCount = 24;
+        static constexpr int progressTileCount = 26;
         static constexpr int progressTileW = 6;
         static constexpr int progressTileH = 16;
         static constexpr int progressGap = 2;
