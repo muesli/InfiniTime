@@ -22,6 +22,7 @@ namespace Pinetime {
     class NotificationManager;
     class HeartRateController;
     class MotionController;
+    class SimpleWeatherService;
   }
 
   namespace Applications {
@@ -64,7 +65,6 @@ namespace Pinetime {
 
         lv_obj_t* label_hour;
         lv_obj_t* label_minute;
-        lv_obj_t* label_time_ampm;
         lv_obj_t* label_date;
         lv_obj_t* progressValue;
         lv_obj_t* progressBar = nullptr;

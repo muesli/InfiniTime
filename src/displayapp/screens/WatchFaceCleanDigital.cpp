@@ -25,7 +25,6 @@ namespace {
   }
 
   constexpr int nCleanDigitalColors = 8;
-
   constexpr std::array<lv_color_t, nCleanDigitalColors> cleanDigitalHighlightColors = {
     LV_COLOR_MAKE(0x90, 0x50, 0xB0), // purple
     LV_COLOR_MAKE(0xE0, 0x20, 0x7A), // pink
@@ -68,13 +67,12 @@ WatchFaceCleanDigital::WatchFaceCleanDigital(Controllers::DateTime& dateTimeCont
 
   statusIcons.Create();
 
+  // old progressbar: 0xC9341C lv_color_hex(0xD93D24) : lv_color_hex(0x2B070A);
   auto brightGray = lv_color_hex(0xFDFBFE);
   auto midGray = lv_color_hex(0xA8B2E1);
   auto darkGray = lv_color_hex(0x414563);
   auto brightHighlight = cleanDigitalHighlightColors[settingsController.GetCleanDigitalColorIndex()];
   auto darkHighlight = lv_color_mix(brightHighlight, LV_COLOR_BLACK, 50);
-
-  // old progressbar: 0xC9341C lv_color_hex(0xD93D24) : lv_color_hex(0x2B070A);
 
   auto colorDate = midGray;
   auto colorTemp = midGray;
@@ -86,11 +84,13 @@ WatchFaceCleanDigital::WatchFaceCleanDigital(Controllers::DateTime& dateTimeCont
   WatchFaceCleanDigital::colorProgressFilled = brightHighlight;
   WatchFaceCleanDigital::colorProgressEmpty = darkHighlight;
 
+  // notification icon
   notificationIcon = lv_label_create(lv_scr_act(), nullptr);
   lv_obj_set_style_local_text_color(notificationIcon, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_WHITE);
   lv_label_set_text_static(notificationIcon, NotificationIcon::GetIcon(true));
   lv_obj_align(notificationIcon, nullptr, LV_ALIGN_IN_TOP_LEFT, 0, 0);
 
+  // weather icon + temp
   weatherIcon = lv_label_create(lv_scr_act(), nullptr);
   lv_obj_set_style_local_text_color(weatherIcon, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, colorTemp);
   lv_obj_set_style_local_text_font(weatherIcon, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, &fontawesome_weathericons);
@@ -104,11 +104,13 @@ WatchFaceCleanDigital::WatchFaceCleanDigital(Controllers::DateTime& dateTimeCont
   lv_label_set_text(temperature, "");
   lv_obj_align(temperature, nullptr, LV_ALIGN_IN_TOP_MID, 72, 64);
 
+  // date
   label_date = lv_label_create(lv_scr_act(), nullptr);
   lv_obj_set_style_local_text_font(label_date, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, &roboto_20);
   lv_obj_align(label_date, lv_scr_act(), LV_ALIGN_CENTER, -60, 22);
   lv_obj_set_style_local_text_color(label_date, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, colorDate);
 
+  // time: hour + minute
   label_hour = lv_label_create(lv_scr_act(), nullptr);
   lv_obj_set_style_local_text_font(label_hour, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, &roboto_italic_120);
   lv_obj_align(label_hour, lv_scr_act(), LV_ALIGN_IN_RIGHT_MID, 0, 0);
@@ -119,10 +121,7 @@ WatchFaceCleanDigital::WatchFaceCleanDigital(Controllers::DateTime& dateTimeCont
   lv_obj_align(label_minute, lv_scr_act(), LV_ALIGN_IN_RIGHT_MID, 0, 0);
   lv_obj_set_style_local_text_color(label_minute, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, colorMinute);
 
-  label_time_ampm = lv_label_create(lv_scr_act(), nullptr);
-  lv_label_set_text_static(label_time_ampm, "");
-  lv_obj_align(label_time_ampm, lv_scr_act(), LV_ALIGN_IN_RIGHT_MID, -30, -55);
-
+  // progress bar + label
   progressValue = lv_label_create(lv_scr_act(), nullptr);
   lv_obj_set_style_local_text_font(progressValue, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, &roboto_italic_32);
   lv_obj_set_style_local_text_color(progressValue, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, colorProgressValue);
@@ -507,17 +506,11 @@ void WatchFaceCleanDigital::Refresh() {
     uint8_t minute = dateTimeController.Minutes();
 
     if (settingsController.GetClockType() == Controllers::Settings::ClockType::H12) {
-      // char ampmChar[3] = "AM";
       if (hour == 0) {
         hour = 12;
-      } else if (hour == 12) {
-        // ampmChar[0] = 'P';
       } else if (hour > 12) {
         hour = hour - 12;
-        // ampmChar[0] = 'P';
       }
-      // lv_label_set_text(label_time_ampm, ampmChar);
-
       lv_label_set_text_fmt(label_hour, "%02d", hour);
       lv_obj_align(label_hour, lv_scr_act(), LV_ALIGN_CENTER, -28, -48);
       lv_label_set_text_fmt(label_minute, "%02d", minute);
@@ -531,7 +524,6 @@ void WatchFaceCleanDigital::Refresh() {
 
     currentDate = std::chrono::time_point_cast<std::chrono::days>(currentDateTime.Get());
     if (currentDate.IsUpdated()) {
-      // uint16_t year = dateTimeController.Year();
       uint8_t day = dateTimeController.Day();
       lv_label_set_text_fmt(label_date, "%s %d", dateTimeController.DayOfWeekShortToString(), day);
       lv_obj_realign(label_date);
