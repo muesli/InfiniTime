@@ -44,6 +44,9 @@ RUN apt-get update -qq \
         clang-tidy \
         libncurses5
 
+# System fonts
+RUN apt-get install -y fonts-roboto-fontface
+
 # Git needed for PROJECT_GIT_COMMIT_HASH variable setting
 
 RUN pip3 install adafruit-nrfutil
