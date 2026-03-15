@@ -59,8 +59,12 @@ Weather::Weather(Controllers::Settings& settingsController, Controllers::SimpleW
   lv_obj_align(icon, condition, LV_ALIGN_OUT_TOP_MID, 0, 0);
   lv_obj_set_auto_realign(icon, true);
 
+  auto forecastDays = Controllers::SimpleWeatherService::MaxNbForecastDays > 3 ? 3 : Controllers::SimpleWeatherService::MaxNbForecastDays;
+
   forecast = lv_table_create(lv_scr_act(), nullptr);
-  lv_table_set_col_cnt(forecast, Controllers::SimpleWeatherService::MaxNbForecastDays);
+  lv_obj_set_width(forecast, 80 * forecastDays);
+
+  lv_table_set_col_cnt(forecast, forecastDays);
   lv_table_set_row_cnt(forecast, 4);
   // LV_TABLE_PART_CELL1: Default table style
   lv_obj_set_style_local_border_color(forecast, LV_TABLE_PART_CELL1, LV_STATE_DEFAULT, LV_COLOR_BLACK);
@@ -84,8 +88,8 @@ Weather::Weather(Controllers::Settings& settingsController, Controllers::SimpleW
 
   lv_obj_align(forecast, nullptr, LV_ALIGN_IN_BOTTOM_LEFT, 0, 0);
 
-  for (int i = 0; i < Controllers::SimpleWeatherService::MaxNbForecastDays; i++) {
-    lv_table_set_col_width(forecast, i, 48);
+  for (int i = 0; i < forecastDays; i++) {
+    lv_table_set_col_width(forecast, i, 80);
     lv_table_set_cell_type(forecast, 1, i, LV_TABLE_PART_CELL2);
     lv_table_set_cell_align(forecast, 0, i, LV_LABEL_ALIGN_CENTER);
     lv_table_set_cell_align(forecast, 1, i, LV_LABEL_ALIGN_CENTER);
@@ -139,7 +143,7 @@ void Weather::Refresh() {
     if (optCurrentForecast) {
       std::tm localTime = *std::localtime(reinterpret_cast<const time_t*>(&optCurrentForecast->timestamp));
 
-      for (int i = 0; i < optCurrentForecast->nbDays; i++) {
+      for (int i = 0; i < optCurrentForecast->nbDays && i < 3; i++) {
         int16_t maxTemp = optCurrentForecast->days[i]->maxTemperature.Celsius();
         int16_t minTemp = optCurrentForecast->days[i]->minTemperature.Celsius();
         if (settingsController.GetWeatherFormat() == Controllers::Settings::WeatherFormat::Imperial) {
@@ -170,7 +174,7 @@ void Weather::Refresh() {
         lv_table_set_cell_value_fmt(forecast, 3, i, "%s%d", minPadding, minTemp);
       }
     } else {
-      for (int i = 0; i < Controllers::SimpleWeatherService::MaxNbForecastDays; i++) {
+      for (int i = 0; i < Controllers::SimpleWeatherService::MaxNbForecastDays && i < 3; i++) {
         lv_table_set_cell_value(forecast, 0, i, "");
         lv_table_set_cell_value(forecast, 1, i, "");
         lv_table_set_cell_value(forecast, 2, i, "");

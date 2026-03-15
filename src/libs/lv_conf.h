@@ -413,10 +413,11 @@ typedef void* lv_indev_drv_user_data_t;            /*Type of user data in the in
  *                                LV_FONT_DECLARE(my_font_2)
  */
 
-#define LV_FONT_CUSTOM_DECLARE LV_FONT_DECLARE(jetbrains_mono_bold_20) \
-                               LV_FONT_DECLARE(jetbrains_mono_extrabold_compressed) \
-                               LV_FONT_DECLARE(jetbrains_mono_42) \
-                               LV_FONT_DECLARE(jetbrains_mono_76) \
+#define LV_FONT_CUSTOM_DECLARE LV_FONT_DECLARE(roboto_bold_20) \
+                               LV_FONT_DECLARE(roboto_mono_bold_20) \
+                               LV_FONT_DECLARE(roboto_extrabold_80) \
+                               LV_FONT_DECLARE(roboto_42) \
+                               LV_FONT_DECLARE(roboto_76) \
                                LV_FONT_DECLARE(open_sans_light) \
                                LV_FONT_DECLARE(fontawesome_weathericons) \
                                LV_FONT_DECLARE(lv_font_sys_48)
@@ -479,10 +480,10 @@ typedef void* lv_font_user_data_t;
 #define LV_THEME_DEFAULT_COLOR_PRIMARY      lv_color_hex(0xffffff)
 #define LV_THEME_DEFAULT_COLOR_SECONDARY    lv_color_hex(0xaaaaaa)
 #define LV_THEME_DEFAULT_FLAG               0//LV_THEME_MATERIAL_FLAG_DARK
-#define LV_THEME_DEFAULT_FONT_SMALL         &jetbrains_mono_bold_20
-#define LV_THEME_DEFAULT_FONT_NORMAL        &jetbrains_mono_bold_20
-#define LV_THEME_DEFAULT_FONT_SUBTITLE      &jetbrains_mono_bold_20
-#define LV_THEME_DEFAULT_FONT_TITLE         &jetbrains_mono_bold_20
+#define LV_THEME_DEFAULT_FONT_SMALL         &roboto_bold_20
+#define LV_THEME_DEFAULT_FONT_NORMAL        &roboto_bold_20
+#define LV_THEME_DEFAULT_FONT_SUBTITLE      &roboto_bold_20
+#define LV_THEME_DEFAULT_FONT_TITLE         &roboto_bold_20
 
 /*=================
  *  Text settings
